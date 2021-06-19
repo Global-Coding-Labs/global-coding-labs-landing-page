@@ -1,5 +1,7 @@
-export default function Home() {
+import Home from '../sections/Home';
+
+export default function Main() {
   return (
-    <p>home</p>
+    <Home />
   )
 }

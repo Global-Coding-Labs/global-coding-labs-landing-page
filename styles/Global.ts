@@ -12,4 +12,9 @@ export default createGlobalStyle`
   html {
     font-size: 1em;
   }
+
+  body {
+    font-family: 'Noto Sans', sans-serif;
+    background-color: white;
+  }
 `;
