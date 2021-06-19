@@ -1,14 +1,14 @@
 import styled, { css } from 'styled-components'
 
 export const Headline3 = styled.p`
-  font-size: 48px;
+  font-size: 2rem;
   font-weight: 600;
   letter-spacing: -1.5px;
   line-height: 140%;
 `;
 
 export const Headline1 = styled.p`
-  font-size: 96px;
+  font-size: 4rem;
   font-weight: 600;
   letter-spacing: -1.5px;
   line-height: 140%;

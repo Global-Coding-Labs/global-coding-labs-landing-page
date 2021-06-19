@@ -10,7 +10,7 @@ export default createGlobalStyle`
   }
 
   html {
-    font-size: 1em;
+    font-size: calc(.4em + 1vw);
   }
 
   body {
