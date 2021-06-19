@@ -1,7 +1,49 @@
+import { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
+import { motion } from "framer-motion";
 import { Headline3, Headline1 as HL1, Flex } from "../../styles/Components";
 
+type Directions = { top: number; right: number; bottom: number; left: number };
+
+function GetDistanceToTheTop(elementDistance: Directions) {
+  const [distance, setDistance] = useState<Directions>({
+    top: 0,
+    right: 0,
+    left: 0,
+    bottom: 0,
+  });
+
+  useEffect(() => {
+    setDistance({
+      top: -elementDistance.top,
+      bottom: window.innerHeight - elementDistance.bottom,
+      left: -elementDistance.left,
+      right: window.innerWidth - elementDistance.right,
+    });
+  }, [elementDistance]);
+
+  return distance;
+}
+
 export default function Home() {
+  const smallSphereRef = useRef(null);
+  const [sphereDistance, setSphereDistance] = useState(0);
+  const distance = GetDistanceToTheTop(sphereDistance);
+
+  useEffect(() => {
+    const sphere = smallSphereRef.current;
+    if (sphere) {
+      const top = sphere.getBoundingClientRect().top;
+      const left = sphere.getBoundingClientRect().left;
+      const bottom = sphere.getBoundingClientRect().bottom;
+      const right = sphere.getBoundingClientRect().right;
+
+      setSphereDistance({ top, left, bottom, right });
+    }
+  }, [smallSphereRef]);
+
+  console.log(distance);
+
   return (
     <Container>
       <Navbar>
@@ -19,8 +61,16 @@ export default function Home() {
 
       <Hero>
         <Flex column justifyCenter>
-          <BigSphere />
-          <SmallSphere1 />
+          <SmallSphere1
+            ref={smallSphereRef}
+            drag
+            dragConstraints={{
+              top: distance.top,
+              left: distance.left,
+              right: distance.right,
+              bottom: distance.bottom,
+            }}
+          />
 
           <Heading>
             <Headline1>
@@ -29,6 +79,15 @@ export default function Home() {
 
             <Button>contact us</Button>
           </Heading>
+          <BigSphere
+            drag
+            dragConstraints={{
+              top: -10,
+              left: -10,
+              right: 10,
+              bottom: 10,
+            }}
+          />
         </Flex>
       </Hero>
     </Container>
@@ -37,15 +96,17 @@ export default function Home() {
 
 const Heading = styled.div`
   width: 80%;
+  user-select: none;
+  z-index: 1;
 
-  @media(max-width: 768px) {
+  @media (max-width: 768px) {
     width: 100%;
   }
 `;
 
 const Headline1 = styled(HL1)`
-  margin-top: -.5em;
-  margin-bottom: .8em;
+  margin-top: -0.5em;
+  margin-bottom: 0.8em;
 `;
 
 const CO = styled.div`
@@ -55,7 +116,7 @@ const CO = styled.div`
   overflow: hidden;
   position: relative;
 
-  @media(max-width: 768px) {
+  @media (max-width: 768px) {
     width: 90vw;
   }
 `;
@@ -79,32 +140,30 @@ const Navigation = styled.div`
 
   & > div {
     background-color: ${(props) => props.theme.primary1};
-    height: .6em;
+    height: 0.6em;
     width: 2.3em;
 
     &:last-child {
-      margin-top: .2em;
+      margin-top: 0.2em;
     }
   }
 `;
 
-const BigSphere = styled.div`
+const BigSphere = styled(motion.div)`
   display: block;
   height: 38vw;
   width: 38vw;
   background-image: radial-gradient(
-    at 70%,
+    at 0%,
     ${(props) => props.theme.secondary3},
     ${(props) => props.theme.primary2}
   );
   border-radius: 100%;
-  transform: rotate(200deg);
-  position: absolute;
+  position: fixed;
   right: 0;
   top: 15vh;
-  z-index: -1;
 
-  @media(max-width: 768px) {
+  @media (max-width: 768px) {
     height: 45vw;
     width: 45vw;
     top: 25vh;
@@ -120,7 +179,7 @@ const SmallSphere1 = styled(SmallSphere)`
   top: 20vh;
   right: 50vw;
 
-  @media(max-width: 768px) {
+  @media (max-width: 768px) {
     height: 4vw;
     width: 4vw;
     top: 30vh;
@@ -142,7 +201,7 @@ const Button = styled.button`
   text-transform: uppercase;
   font-weight: 700;
   color: white;
-  padding: .7em 2.5em;
+  padding: 0.7em 2.5em;
   border-radius: 50px;
   cursor: pointer;
 `;
