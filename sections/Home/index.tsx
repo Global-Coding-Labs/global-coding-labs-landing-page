@@ -3,10 +3,8 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 import { Headline3, Headline1 as HL1, Flex } from "../../styles/Components";
 
-type Directions = { top: number; right: number; bottom: number; left: number };
-
-function GetDistanceToTheTop(elementDistance: Directions) {
-  const [distance, setDistance] = useState<Directions>({
+function GetDistanceToTheTop(domElement: any) {
+  const [distance, setDistance] = useState({
     top: 0,
     right: 0,
     left: 0,
@@ -14,35 +12,38 @@ function GetDistanceToTheTop(elementDistance: Directions) {
   });
 
   useEffect(() => {
-    setDistance({
-      top: -elementDistance.top,
-      bottom: window.innerHeight - elementDistance.bottom,
-      left: -elementDistance.left,
-      right: window.innerWidth - elementDistance.right,
-    });
-  }, [elementDistance]);
+    if (domElement) {
+      setDistance({
+        top: -domElement.getBoundingClientRect().top,
+        bottom: window.innerHeight - domElement.getBoundingClientRect().bottom,
+        left: -domElement.getBoundingClientRect().left,
+        right: window.innerWidth - domElement.getBoundingClientRect().right,
+      });
+    }
+  }, [domElement]);
+
+  return distance;
+}
+
+function GetElementPositionConstraints(ref: any) {
+  const [element, setElement] = useState(null);
+  const distance = GetDistanceToTheTop(element);
+
+  useEffect(() => {
+    const domElement = ref.current;
+    if (domElement) {
+      setElement(domElement);
+    }
+  }, [ref]);
 
   return distance;
 }
 
 export default function Home() {
   const smallSphereRef = useRef(null);
-  const [sphereDistance, setSphereDistance] = useState(0);
-  const distance = GetDistanceToTheTop(sphereDistance);
-
-  useEffect(() => {
-    const sphere = smallSphereRef.current;
-    if (sphere) {
-      const top = sphere.getBoundingClientRect().top;
-      const left = sphere.getBoundingClientRect().left;
-      const bottom = sphere.getBoundingClientRect().bottom;
-      const right = sphere.getBoundingClientRect().right;
-
-      setSphereDistance({ top, left, bottom, right });
-    }
-  }, [smallSphereRef]);
-
-  console.log(distance);
+  const bigSphereRef = useRef(null);
+  const smallSphereConstraints = GetElementPositionConstraints(smallSphereRef);
+  const bigSphereConstraints = GetElementPositionConstraints(bigSphereRef);
 
   return (
     <Container>
@@ -65,10 +66,10 @@ export default function Home() {
             ref={smallSphereRef}
             drag
             dragConstraints={{
-              top: distance.top,
-              left: distance.left,
-              right: distance.right,
-              bottom: distance.bottom,
+              top: smallSphereConstraints.top,
+              left: smallSphereConstraints.left,
+              right: smallSphereConstraints.right,
+              bottom: smallSphereConstraints.bottom,
             }}
           />
 
@@ -80,12 +81,13 @@ export default function Home() {
             <Button>contact us</Button>
           </Heading>
           <BigSphere
+            ref={bigSphereRef}
             drag
             dragConstraints={{
-              top: -10,
-              left: -10,
-              right: 10,
-              bottom: 10,
+              top: bigSphereConstraints.top,
+              left: bigSphereConstraints.left,
+              right: bigSphereConstraints.right,
+              bottom: bigSphereConstraints.bottom,
             }}
           />
         </Flex>
