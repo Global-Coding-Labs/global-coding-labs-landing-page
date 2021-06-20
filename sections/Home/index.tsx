@@ -111,7 +111,6 @@ const Navbar = styled(motion.div)`
 
 const Logo = styled.div`
   color: ${(props) => props.theme.primary1};
-  cursor: default;
   z-index: 2;
 `;
 
@@ -139,7 +138,7 @@ const BigSphere = styled(motion.div)`
     ${(props) => props.theme.primary2}
   );
   border-radius: 100%;
-  position: fixed;
+  position: absolute;
   right: 0;
   top: 15vh;
   box-shadow: 5px 5px 20px ${(props) => props.theme.secondary3};

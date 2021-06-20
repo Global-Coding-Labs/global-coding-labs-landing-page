@@ -28,12 +28,14 @@ const CustomCursor = styled.div`
   width: .8em;
   border-radius: 50%;
   position: absolute;
-  transform: translate(-50%, -50%);
   z-index: 99;
   user-select: none;
   pointer-events: none;
   transition-duration: .1s;
   transition-property: width, height, background-color, border;
+  top: 50%;
+  left: 50%;
+  transform: translate(50%, 50%);
 
   &.default {
     background-color: ${props => props.theme.primary1};
@@ -42,6 +44,7 @@ const CustomCursor = styled.div`
   &.focus {
     border: .2em solid ${props => props.theme.secondary1};
     width: 4em;
-    height: 4em;    
+    height: 4em;
+    transform: translate(-30%, -30%);
   }
 `;
