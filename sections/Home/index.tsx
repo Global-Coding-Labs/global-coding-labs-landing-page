@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import styled from "styled-components";
-import { motion } from "framer-motion";
+import { motion, useViewportScroll, useTransform } from 'framer-motion';
 
 import {
   Headline3,
@@ -20,6 +20,9 @@ export default function Home() {
   const smallSphereConstraints =
     useGetElementPositionConstraints(smallSphereRef);
   const bigSphereConstraints = useGetElementPositionConstraints(bigSphereRef);
+
+  const { scrollYProgress } = useViewportScroll();
+  const y = useTransform(scrollYProgress, [0.1, 0.4], [200, 100]);
 
   return (
     <Container>
@@ -61,6 +64,7 @@ export default function Home() {
             initial={{ x: 300, y: -300 }}
             animate={{x: 0, y: 0 }}
             transition={{ type: "spring", delay: 0.1, ease: [0.1, 0.6, 0.6, 0.01] }}
+            style={{ position: 'absolute', top: y }}
           />
 
           <Heading>
@@ -82,6 +86,8 @@ export default function Home() {
             initial={{ x: 300, y: -300 }}
             animate={{x: 0, y: 0 }}
             transition={{ type: "spring", delay: 0.1, ease: [0.1, 0.6, 0.6, 0.01] }}
+            style={{ position: 'absolute', top: y }}
+            
           />
         </Flex>
       </Hero>
