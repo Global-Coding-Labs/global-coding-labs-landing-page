@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 export function useGetDistanceToTheTop(domElement: any) {
   const [distance, setDistance] = useState({
@@ -11,10 +11,12 @@ export function useGetDistanceToTheTop(domElement: any) {
   useEffect(() => {
     if (domElement) {
       setDistance({
-        top: -domElement.getBoundingClientRect().top,
-        bottom: window.innerHeight - domElement.getBoundingClientRect().bottom,
-        left: -domElement.getBoundingClientRect().left,
-        right: window.innerWidth - domElement.getBoundingClientRect().right,
+        top: -domElement.getBoundingClientRect().top - 300,
+        bottom:
+          window.innerHeight - domElement.getBoundingClientRect().bottom - 300,
+        left: -domElement.getBoundingClientRect().left + 300,
+        right:
+          window.innerWidth - domElement.getBoundingClientRect().right + 300,
       });
     }
   }, [domElement]);

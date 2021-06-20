@@ -24,9 +24,9 @@ export default function Home() {
   return (
     <Container>
       <Navbar
-        animate={{ y: 0 }}
+        initial={{ x: 300, y: -300 }}
+        animate={{x: 0, y: 0 }}
         transition={{ type: "spring", delay: 0.1, ease: [0.1, 0.6, 0.6, 0.01] }}
-        initial={{ y: -100 }}
       >
         <Flex justifySpaceBetween alignCenter>
           <Logo>
@@ -58,6 +58,9 @@ export default function Home() {
               right: smallSphereConstraints.right,
               bottom: smallSphereConstraints.bottom,
             }}
+            initial={{ x: 300, y: -300 }}
+            animate={{x: 0, y: 0 }}
+            transition={{ type: "spring", delay: 0.1, ease: [0.1, 0.6, 0.6, 0.01] }}
           />
 
           <Heading>
@@ -76,6 +79,9 @@ export default function Home() {
               right: bigSphereConstraints.right,
               bottom: bigSphereConstraints.bottom,
             }}
+            initial={{ x: 300, y: -300 }}
+            animate={{x: 0, y: 0 }}
+            transition={{ type: "spring", delay: 0.1, ease: [0.1, 0.6, 0.6, 0.01] }}
           />
         </Flex>
       </Hero>
@@ -112,6 +118,7 @@ const Logo = styled.div`
 
 const Navigation = styled.div`
   z-index: 2;
+  padding: .5em;
 
   & > div {
     background-color: ${(props) => props.theme.primary1};
@@ -138,6 +145,8 @@ const BigSphere = styled(motion.div)`
   right: 0;
   top: 15vh;
   box-shadow: 5px 5px 20px ${(props) => props.theme.secondary3};
+  transition: .01s ease-in;
+  transition-property: width, height;
 
   @media (max-width: 768px) {
     height: 45vw;

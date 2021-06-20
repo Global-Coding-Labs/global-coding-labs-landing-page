@@ -9,8 +9,8 @@ export default function Cursor(props: HTMLAttributes<HTMLElement>) {
 
   function onMouseMove(e: any) {
     setPositions({
-      x: e.pageX,
-      y: e.pageY
+      x: e.pageX - 15,
+      y: e.pageY - 15
     });
   }
 
@@ -24,8 +24,8 @@ export default function Cursor(props: HTMLAttributes<HTMLElement>) {
 }
 
 const CustomCursor = styled.div`
-  height: 1.25em;
-  width: 1.25em;
+  height: .8em;
+  width: .8em;
   border-radius: 50%;
   position: absolute;
   transform: translate(-50%, -50%);
@@ -40,7 +40,7 @@ const CustomCursor = styled.div`
   }
 
   &.focus {
-    border: 5px solid ${props => props.theme.secondary1};
+    border: .2em solid ${props => props.theme.secondary1};
     width: 4em;
     height: 4em;    
   }
