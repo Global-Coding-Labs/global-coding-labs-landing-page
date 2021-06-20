@@ -2,31 +2,45 @@ import { useRef } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 
-import { 
-  Headline3, 
+import {
+  Headline3,
   Headline1 as HL1,
-  Flex, 
+  Flex,
   Container,
   Emphatize,
-  Button
+  Button,
 } from "../../styles/Components";
-import { useGetElementPositionConstraints } from '../../hooks';
+import { useGetElementPositionConstraints } from "../../hooks";
+import { useStore } from "../../state";
 
 export default function Home() {
+  const { dispatch, state } = useStore();
   const smallSphereRef = useRef(null);
   const bigSphereRef = useRef(null);
-  const smallSphereConstraints = useGetElementPositionConstraints(smallSphereRef);
+  const smallSphereConstraints =
+    useGetElementPositionConstraints(smallSphereRef);
   const bigSphereConstraints = useGetElementPositionConstraints(bigSphereRef);
 
   return (
     <Container>
-      <Navbar animate={{ y: 0 }} transition={{ type: 'spring', delay: .1, ease: [0.1, 0.6, 0.6, 0.01] }} initial={{ y: -100 }}>
+      <Navbar
+        animate={{ y: 0 }}
+        transition={{ type: "spring", delay: 0.1, ease: [0.1, 0.6, 0.6, 0.01] }}
+        initial={{ y: -100 }}
+      >
         <Flex justifySpaceBetween alignCenter>
           <Logo>
             <Headline3>{"</>"}</Headline3>
           </Logo>
 
-          <Navigation>
+          <Navigation
+            onMouseOver={() => {
+              dispatch({ type: "CHANGE_CURSOR_STATE", payload: "focus" });
+            }}
+            onMouseLeave={() => {
+              dispatch({ type: "CHANGE_CURSOR_STATE", payload: "default" });
+            }}
+          >
             <div />
             <div />
           </Navigation>
@@ -73,6 +87,7 @@ const Heading = styled.div`
   width: 80%;
   user-select: none;
   z-index: 1;
+  pointer-events: none;
 
   @media (max-width: 768px) {
     width: 100%;
@@ -96,9 +111,7 @@ const Logo = styled.div`
 `;
 
 const Navigation = styled.div`
-  cursor: pointer;
   z-index: 2;
-
 
   & > div {
     background-color: ${(props) => props.theme.primary1};
@@ -124,15 +137,13 @@ const BigSphere = styled(motion.div)`
   position: fixed;
   right: 0;
   top: 15vh;
-  box-shadow: 5px 5px 20px ${props => props.theme.secondary3};
-
+  box-shadow: 5px 5px 20px ${(props) => props.theme.secondary3};
 
   @media (max-width: 768px) {
     height: 45vw;
     width: 45vw;
     top: 25vh;
   }
-
 `;
 
 const SmallSphere = styled(BigSphere)`
