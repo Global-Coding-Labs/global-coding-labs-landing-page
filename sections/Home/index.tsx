@@ -1,53 +1,19 @@
-import { useState, useEffect, useRef } from "react";
+import { useRef } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
+
 import { Headline3, Headline1 as HL1, Flex } from "../../styles/Components";
-
-function GetDistanceToTheTop(domElement: any) {
-  const [distance, setDistance] = useState({
-    top: 0,
-    right: 0,
-    left: 0,
-    bottom: 0,
-  });
-
-  useEffect(() => {
-    if (domElement) {
-      setDistance({
-        top: -domElement.getBoundingClientRect().top,
-        bottom: window.innerHeight - domElement.getBoundingClientRect().bottom,
-        left: -domElement.getBoundingClientRect().left,
-        right: window.innerWidth - domElement.getBoundingClientRect().right,
-      });
-    }
-  }, [domElement]);
-
-  return distance;
-}
-
-function GetElementPositionConstraints(ref: any) {
-  const [element, setElement] = useState(null);
-  const distance = GetDistanceToTheTop(element);
-
-  useEffect(() => {
-    const domElement = ref.current;
-    if (domElement) {
-      setElement(domElement);
-    }
-  }, [ref]);
-
-  return distance;
-}
+import { useGetElementPositionConstraints } from '../../hooks';
 
 export default function Home() {
   const smallSphereRef = useRef(null);
   const bigSphereRef = useRef(null);
-  const smallSphereConstraints = GetElementPositionConstraints(smallSphereRef);
-  const bigSphereConstraints = GetElementPositionConstraints(bigSphereRef);
+  const smallSphereConstraints = useGetElementPositionConstraints(smallSphereRef);
+  const bigSphereConstraints = useGetElementPositionConstraints(bigSphereRef);
 
   return (
     <Container>
-      <Navbar>
+      <Navbar animate={{ y: 0 }} transition={{ type: 'spring', delay: .1, ease: [0.1, 0.6, 0.6, 0.01] }} initial={{ y: -100 }}>
         <Flex justifySpaceBetween alignCenter>
           <Logo>
             <Headline3>{"</>"}</Headline3>
@@ -127,7 +93,7 @@ const Container = styled(CO)`
   height: 100vh;
 `;
 
-const Navbar = styled.div`
+const Navbar = styled(motion.div)`
   height: 100px;
   padding-top: 25px;
 `;
@@ -135,10 +101,13 @@ const Navbar = styled.div`
 const Logo = styled.div`
   color: ${(props) => props.theme.primary1};
   cursor: default;
+  z-index: 2;
 `;
 
 const Navigation = styled.div`
   cursor: pointer;
+  z-index: 2;
+
 
   & > div {
     background-color: ${(props) => props.theme.primary1};
@@ -164,17 +133,21 @@ const BigSphere = styled(motion.div)`
   position: fixed;
   right: 0;
   top: 15vh;
+  box-shadow: 5px 5px 20px ${props => props.theme.secondary3};
+
 
   @media (max-width: 768px) {
     height: 45vw;
     width: 45vw;
     top: 25vh;
   }
+
 `;
 
 const SmallSphere = styled(BigSphere)`
   width: 3vw;
   height: 3vw;
+  z-index: 2;
 `;
 
 const SmallSphere1 = styled(SmallSphere)`
