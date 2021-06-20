@@ -2,7 +2,14 @@ import { useRef } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 
-import { Headline3, Headline1 as HL1, Flex } from "../../styles/Components";
+import { 
+  Headline3, 
+  Headline1 as HL1,
+  Flex, 
+  Container,
+  Emphatize,
+  Button
+} from "../../styles/Components";
 import { useGetElementPositionConstraints } from '../../hooks';
 
 export default function Home() {
@@ -77,22 +84,6 @@ const Headline1 = styled(HL1)`
   margin-bottom: 0.8em;
 `;
 
-const CO = styled.div`
-  width: 75vw;
-  margin: 0 auto;
-  min-height: 100vh;
-  overflow: hidden;
-  position: relative;
-
-  @media (max-width: 768px) {
-    width: 90vw;
-  }
-`;
-
-const Container = styled(CO)`
-  height: 100vh;
-`;
-
 const Navbar = styled(motion.div)`
   height: 100px;
   padding-top: 25px;
@@ -163,20 +154,4 @@ const SmallSphere1 = styled(SmallSphere)`
 
 const Hero = styled.div`
   height: 80vh;
-`;
-
-const Emphatize = styled.span`
-  color: ${(props) => props.theme.secondary1};
-`;
-
-const Button = styled.button`
-  background-color: ${(props) => props.theme.secondary1};
-  border: none;
-  font-size: 1.2rem;
-  text-transform: uppercase;
-  font-weight: 700;
-  color: white;
-  padding: 0.7em 2.5em;
-  border-radius: 50px;
-  cursor: pointer;
 `;
