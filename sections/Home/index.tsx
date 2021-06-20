@@ -107,7 +107,6 @@ const Headline1 = styled(HL1)`
 
 const Navbar = styled(motion.div)`
   height: 100px;
-  padding-top: 25px;
 `;
 
 const Logo = styled.div`
@@ -118,7 +117,6 @@ const Logo = styled.div`
 
 const Navigation = styled.div`
   z-index: 2;
-  padding: .5em;
 
   & > div {
     background-color: ${(props) => props.theme.primary1};

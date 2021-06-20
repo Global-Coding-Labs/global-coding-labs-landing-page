@@ -53,6 +53,7 @@ export const Container = styled.div`
   min-height: 100vh;
   position: relative;
   height: 100vh;
+  padding: .5em 0;
 
   @media (max-width: 768px) {
     width: 90vw;
