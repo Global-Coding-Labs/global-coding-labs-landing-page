@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import styled from "styled-components";
-import { motion, useViewportScroll, useTransform } from 'framer-motion';
+import { motion, useViewportScroll, useTransform } from "framer-motion";
 
 import {
   Headline3,
@@ -28,8 +28,8 @@ export default function Home() {
     <Container>
       <Navbar
         initial={{ x: 300, y: -300 }}
-        animate={{x: 0, y: 0 }}
-        transition={{ type: "spring", delay: 0.1, ease: [0.1, 0.6, 0.6, 0.01] }}
+        animate={{ x: 0, y: 0 }}
+        transition={{ delay: 0.1, ease: [0.1, 0.6, 0.6, 0.01] }}
       >
         <Flex justifySpaceBetween alignCenter>
           <Logo>
@@ -62,9 +62,9 @@ export default function Home() {
               bottom: smallSphereConstraints.bottom,
             }}
             initial={{ x: 300, y: -300 }}
-            animate={{x: 0, y: 0 }}
-            transition={{ type: "spring", delay: 0.1, ease: [0.1, 0.6, 0.6, 0.01] }}
-            style={{ position: 'absolute', top: y }}
+            animate={{ x: 0, y: 0 }}
+            transition={{ delay: 0.1, ease: [0.1, 0.6, 0.6, 0.01] }}
+            style={{ position: "absolute", top: y }}
           />
 
           <Heading>
@@ -84,10 +84,9 @@ export default function Home() {
               bottom: bigSphereConstraints.bottom,
             }}
             initial={{ x: 300, y: -300 }}
-            animate={{x: 0, y: 0 }}
-            transition={{ type: "spring", delay: 0.1, ease: [0.1, 0.6, 0.6, 0.01] }}
-            style={{ position: 'absolute', top: y }}
-            
+            animate={{ x: 0, y: 0 }}
+            transition={{ delay: 0.1, ease: [0.1, 0.6, 0.6, 0.01] }}
+            style={{ position: "absolute", top: y }}
           />
         </Flex>
       </Hero>
@@ -148,7 +147,7 @@ const BigSphere = styled(motion.div)`
   right: 0;
   top: 15vh;
   box-shadow: 5px 5px 20px ${(props) => props.theme.secondary3};
-  transition: .01s ease-in;
+  transition: 0.01s ease-in;
   transition-property: width, height;
 
   @media (max-width: 768px) {
