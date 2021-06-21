@@ -22,7 +22,7 @@ export default function Home() {
   const bigSphereConstraints = useGetElementPositionConstraints(bigSphereRef);
 
   const { scrollYProgress } = useViewportScroll();
-  const y = useTransform(scrollYProgress, [0.1, 0.4], [200, 100]);
+  const y = useTransform(scrollYProgress, [0.1, 0.4], [100, -200]);
 
   return (
     <Container>
@@ -61,7 +61,7 @@ export default function Home() {
               right: smallSphereConstraints.right,
               bottom: smallSphereConstraints.bottom,
             }}
-            initial={{ x: 300, y: -300 }}
+            initial={{ x: 200, y: -300 }}
             animate={{ x: 0, y: 0 }}
             transition={{ delay: 0.1, ease: [0.1, 0.6, 0.6, 0.01] }}
             style={{ position: "absolute", top: y }}
