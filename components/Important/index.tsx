@@ -27,4 +27,5 @@ const Rect = styled.div`
   background-color: ${(props) => props.theme.secondary1};
   width: 0.5em;
   min-height: 0.1em;
+  margin-right: 0.5em;
 `;

@@ -37,5 +37,4 @@ export default function About() {
 const Headline3 = styled(H3)`
   font-style: italic;
   font-weight: normal;
-  margin-left: 0.5em;
 `;

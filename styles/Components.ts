@@ -1,14 +1,21 @@
 import styled, { css } from "styled-components";
 
-export const Headline3 = styled.p`
+export const Headline1 = styled.h1`
+  font-size: 4rem;
+  font-weight: 600;
+  letter-spacing: -1.5px;
+  line-height: 140%;
+`;
+
+export const Headline3 = styled.h3`
   font-size: 2rem;
   font-weight: 600;
   letter-spacing: -1.5px;
   line-height: 140%;
 `;
 
-export const Headline1 = styled.p`
-  font-size: 4rem;
+export const Headline5 = styled.h5`
+  font-size: 1rem;
   font-weight: 600;
   letter-spacing: -1.5px;
   line-height: 140%;
