@@ -37,3 +37,9 @@ export function useGetElementPositionConstraints(ref: any) {
 
   return distance;
 }
+
+export function useHandleScroll(handler: () => void) {
+  useEffect(() => {
+    window.addEventListener("scroll", handler);
+  }, []);
+}
