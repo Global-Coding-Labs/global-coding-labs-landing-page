@@ -14,9 +14,9 @@ export function useGetDistanceToTheTop(domElement: any) {
         top: -domElement.getBoundingClientRect().top - 300,
         bottom:
           window.innerHeight - domElement.getBoundingClientRect().bottom - 300,
-        left: -domElement.getBoundingClientRect().left + 300,
+        left: -domElement.getBoundingClientRect().left + 200,
         right:
-          window.innerWidth - domElement.getBoundingClientRect().right + 300
+          window.innerWidth - domElement.getBoundingClientRect().right + 180
       });
     }
   }, [domElement]);
