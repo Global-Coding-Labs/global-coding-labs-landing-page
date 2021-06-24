@@ -47,4 +47,8 @@ const CustomCursor = styled.div`
     height: 4em;
     transform: translate(-30%, -30%);
   }
+
+  @media (hover: none) {
+    display: none;
+  }
 `;
