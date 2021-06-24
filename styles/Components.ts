@@ -3,21 +3,28 @@ import styled, { css } from "styled-components";
 export const Headline1 = styled.h1`
   font-size: 4rem;
   font-weight: 600;
-  letter-spacing: -1.5px;
+  letter-spacing: 140%;
+  line-height: 140%;
+`;
+
+export const Headline2 = styled.h2`
+  font-size: 3rem;
+  font-weight: 600;
+  letter-spacing: 140%;
   line-height: 140%;
 `;
 
 export const Headline3 = styled.h3`
   font-size: 2rem;
   font-weight: 600;
-  letter-spacing: -1.5px;
+  letter-spacing: 140%;
   line-height: 140%;
 `;
 
 export const Headline5 = styled.h5`
   font-size: 1rem;
   font-weight: 600;
-  letter-spacing: -1.5px;
+  letter-spacing: 140%;
   line-height: 140%;
 `;
 
@@ -60,7 +67,7 @@ export const Container = styled.div`
   min-height: 100vh;
   position: relative;
   height: 100vh;
-  padding: .5em 0;
+  padding: 0.5em 0;
 
   @media (max-width: 768px) {
     width: 90vw;
@@ -82,4 +89,3 @@ export const Button = styled.button`
   border-radius: 50px;
   cursor: pointer;
 `;
-
