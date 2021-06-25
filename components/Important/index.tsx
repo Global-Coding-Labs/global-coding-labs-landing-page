@@ -10,7 +10,7 @@ export default function Important({ children, ...rest }: Props) {
   return (
     <Presentation>
       <Rect />
-      <motion.div style={{ opacity: 0 }} {...rest}>
+      <motion.div {...rest}>
         {children}
       </motion.div>
     </Presentation>
@@ -29,3 +29,4 @@ const Rect = styled.div`
   min-height: 0.1em;
   margin-right: 0.5em;
 `;
+
