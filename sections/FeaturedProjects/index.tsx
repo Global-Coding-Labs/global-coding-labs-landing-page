@@ -38,7 +38,7 @@ export default function FeaturedProjects() {
               2- Put the KFC project informations
           */}
 
-          <ProjectContent>
+          {/* <ProjectContent>
             <ContentContainer>
               <Headline2>KFC Iceland</Headline2>
 
@@ -48,7 +48,7 @@ export default function FeaturedProjects() {
                 the user a big range of product modifications.
               </Headline5>
             </ContentContainer>
-          </ProjectContent>
+          </ProjectContent> */}
 
           <ImagesContainer>
             <MorthBackground>
@@ -134,11 +134,12 @@ const ImagesContainer = styled.div`
   align-items: center;
   display: flex;
   justify-content: center;
-  margin-top: -1em;
+  margin-top: 1em;
 `;
 
 const ImageContainer = styled.div`
-  margin-top: -4em;
+  margin-top: -1em;
+  margin-left: -5em;
 
   @media (max-width: 780px) {
     margin-top: 0;
@@ -150,15 +151,15 @@ const ContentContainer = styled.div`
 `;
 
 const MorthBackground = styled.div`
-  width: 40vw;
-  height: 60vw;
+  width: 50vw;
+  height: 50vw;
   background-color: #ff3a43;
-  border-radius: 50%;
-  margin-left: -8em;
+  border-radius: 10%;
+  /* margin-left: -8em; */
   display: block;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.35);
   max-height: 500px;
-
+  
   @media (max-width: 780px) {
     display: flex;
     margin-left: 0;
