@@ -1,31 +1,66 @@
 import styled, { css } from "styled-components";
 
-export const Headline1 = styled.h1`
+// Repeated code to preserve accessibility
+
+export const Headline1 = styled.h1<{ italic?: boolean; light?: boolean; }>`
   font-size: 4rem;
   font-weight: 600;
   letter-spacing: 140%;
   line-height: 140%;
+
+  ${props => props.italic && css`
+    font-style: italic;
+  `}
+
+  ${props => props.light && css`
+    font-weight: 300;
+  `}
 `;
 
-export const Headline2 = styled.h2`
+export const Headline2 = styled.h2<{ italic?: boolean; light?: boolean; }>`
   font-size: 3rem;
   font-weight: 600;
   letter-spacing: 140%;
   line-height: 140%;
+
+  ${props => props.italic && css`
+    font-style: italic;
+  `}
+
+  ${props => props.light && css`
+    font-weight: 300;
+  `}
 `;
 
-export const Headline3 = styled.h3`
+export const Headline3 = styled.h3<{ italic?: boolean; light?: boolean; }>`
   font-size: 2rem;
   font-weight: 600;
   letter-spacing: 140%;
   line-height: 140%;
+
+  ${props => props.italic && css`
+    font-style: italic;
+  `}
+
+  ${props => props.light && css`
+    font-weight: 300;
+  `}
 `;
 
-export const Headline5 = styled.h5`
+export const Headline5 = styled.h5<{ italic?: boolean; light?: boolean; }>`
   font-size: 1rem;
   font-weight: 600;
   letter-spacing: 140%;
   line-height: 140%;
+
+  ${props => props.italic && css`
+    font-style: italic;
+  `}
+
+  ${props => props.light && css`
+    font-family: 'Open Sans';
+    font-weight: 200;
+  `}
 `;
 
 export const Flex = styled.div<{
