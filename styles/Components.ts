@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import { motion } from 'framer-motion';
 
 // Repeated code to preserve accessibility
 
@@ -17,7 +18,7 @@ export const Headline1 = styled.h1<{ italic?: boolean; light?: boolean; }>`
   `}
 `;
 
-export const Headline2 = styled.h2<{ italic?: boolean; light?: boolean; }>`
+export const Headline2 = styled(motion.h2)<{ italic?: boolean; light?: boolean; }>`
   font-size: 3rem;
   font-weight: 600;
   letter-spacing: 140%;
@@ -47,7 +48,7 @@ export const Headline3 = styled.h3<{ italic?: boolean; light?: boolean; }>`
   `}
 `;
 
-export const Headline5 = styled.h5<{ italic?: boolean; light?: boolean; }>`
+export const Headline5 = styled(motion.h5)<{ italic?: boolean; light?: boolean; }>`
   font-size: 1rem;
   font-weight: 600;
   letter-spacing: 140%;
