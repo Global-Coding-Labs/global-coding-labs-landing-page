@@ -1,6 +1,6 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, RefObject } from "react";
 import styled from "styled-components";
-import { motion, useTransform, useMotionValue } from "framer-motion";
+import { motion } from "framer-motion";
 import Image from "next/image";
 
 import { Headline5, Headline2 } from "../../styles/Components";
@@ -13,14 +13,14 @@ export default function ProjectKFC() {
     rotate: 0,
     shadow: "0px 0px 10px rgba(0, 0, 0, .35)",
   });
-  const projectRef = useRef<HTMLElement>(null);
+  const projectRef = useRef<HTMLDivElement | null>(null);
   const [projectControls, titleControls, descriptionControls] =
     useProjectControlledAnimations();
 
   useEffect(() => {
     window.addEventListener("mousemove", (event) => {
       const project = projectRef.current;
-      const { pageY, pageX } = event;
+
       if (project) {
         const boundaries = project.getBoundingClientRect();
 
@@ -36,18 +36,29 @@ export default function ProjectKFC() {
           if (
             event.clientY > (middleY + boundaries.top) / 2 &&
             event.clientY < (middleY + boundaries.bottom) / 2 &&
-            event.clientX > (middleX - 200) + boundaries.left / 2 &&
+            event.clientX > middleX - 200 + boundaries.left / 2 &&
             event.clientX < middleX + middleX / 2
           ) {
-            console.log('entrou');
-            return setMousePosition({ rotate: 0, skew: 0, shadow: "0px 0px 15px rgba(0, 0, 0, .35)" });
+            return setMousePosition({
+              rotate: 0,
+              skew: 0,
+              shadow: "0px 0px 15px rgba(0, 0, 0, .35)",
+            });
           }
           if (event.clientY > middleY && event.clientY < boundaries.bottom) {
             if (event.clientX > middleX && event.clientX < boundaries.right) {
-              setMousePosition({ rotate: -15, skew: 3, shadow: "-15px -10px 15px rgba(0, 0, 0, .35)" });
+              setMousePosition({
+                rotate: -15,
+                skew: 3,
+                shadow: "-15px -10px 15px rgba(0, 0, 0, .35)",
+              });
             } else {
               if (event.clientX < middleX && event.clientX > boundaries.left) {
-                setMousePosition({ rotate: -15, skew: -3, shadow: "15px -10px 15px rgba(0, 0, 0, .35)" });
+                setMousePosition({
+                  rotate: -15,
+                  skew: -3,
+                  shadow: "15px -10px 15px rgba(0, 0, 0, .35)",
+                });
               }
             }
           } else {
@@ -72,14 +83,6 @@ export default function ProjectKFC() {
               }
             }
           }
-
-          // if (event.clientX > middleX && event.clientX < boundaries.right) {
-          //   console.log("right");
-          // } else {
-          //   if (event.clientX < middleX && event.clientX > boundaries.left) {
-          //     console.log("left");
-          //   }
-          // }
         }
       }
     });
