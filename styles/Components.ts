@@ -125,3 +125,35 @@ export const Button = styled.button`
   border-radius: 50px;
   cursor: pointer;
 `;
+
+export const Project = styled.div<{ color: string; }>`
+  width: 100%;
+  height: 40vw;
+  background-color: ${props => props.color};
+  overflow: hidden;
+  display: flex;
+  position: relative;
+  align-items: center;
+  padding: 0 5em;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+  /* TODO: MAKE CARD MOVE ACCORDILING TO THE POSITION OF THE MOUSE ON IT */
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  /* transform: rotateY(0deg) skew(0deg); */
+
+  transition: 1s all;
+
+  /* &:hover {
+    box-shadow: 30px 30px 30px rgba(0, 0, 0, 0.5);
+
+  } */
+
+  @media (max-width: 550px) {
+    height: 80vh;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 2em;
+  }
+
+  /* transform: rotate(40deg); */
+`;

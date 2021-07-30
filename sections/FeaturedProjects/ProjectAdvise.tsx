@@ -5,11 +5,11 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 
 import { Headline5, Headline2, Project } from "../../styles/Components";
-import KFC from "../../assets/kfc-phone.png";
+import Advise from "../../assets/advise.png";
 import { useProjectControlledAnimations } from "./Animations";
 import { useProjectCardAnimation } from '../../hooks'
 
-export default function ProjectKFC() {
+export default function ProjectAdvise() {
   const projectRef = useRef<HTMLDivElement | null>(null);
   const [projectControls, titleControls, descriptionControls] =
     useProjectControlledAnimations();
@@ -18,7 +18,7 @@ export default function ProjectKFC() {
 
   return (
     <Project
-      color="#e8292c"
+      color="#005EEA"
       style={{
         boxShadow: `${mousePosition.shadow}`,
         transform: `rotateY(${mousePosition.rotate}deg) skew(${mousePosition.skew}deg)`,
@@ -34,7 +34,7 @@ export default function ProjectKFC() {
     >
       <Heading>
         <H2 italic initial={{ y: 200, opacity: 0 }} animate={titleControls}>
-          KFC
+          Advise
         </H2>
 
         <H5
@@ -42,17 +42,16 @@ export default function ProjectKFC() {
           initial={{ y: 200, opacity: 0 }}
           animate={descriptionControls}
         >
-          KFC Iceland, delevoped in colaboration with the M7 is an ecommerce for
-          the KFC Iceland products that aims to deliver to the user a big range
-          of product modifications.
+          An Icelandic contability system, delevoped in colaboration with the hugbúnaður, that
+          provides feedback to companies in forms of customisable graphs and tables.
         </H5>
       </Heading>
 
       <ImageContainer
-        initial={{ y: 20, opacity: 0.75 }}
+        initial={{ y: 80, opacity: 0.75 }}
         animate={projectControls}
       >
-        <Img layout="intrinsic" src={KFC} alt="KFC app" />
+        <Img layout="intrinsic" src={Advise} alt="KFC app" />
       </ImageContainer>
     </Project>
   );
@@ -92,13 +91,13 @@ const Img = styled(Image)``;
 
 const ImageContainer = styled(motion.div)`
   position: absolute;
-  bottom: -22vw;
-  right: -40vw;
+  bottom: -25vw;
+  right: -30vw;
   width: 50em;
   height: 40em;
 
   img {
-    width: 20em;
+    width: 25em;
   }
 
   @media (max-width: 950px) {

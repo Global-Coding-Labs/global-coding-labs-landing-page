@@ -6,6 +6,7 @@ import Important from "../../components/Important";
 import { useHandleScroll } from "../../hooks";
 import { handleScrollTo } from "../../utils";
 import ProjectKFC from './ProjectKFC';
+import ProjectAdvise from './ProjectAdvise';
 
 export default function FeaturedProjects() {
   const controls = useAnimation();
@@ -32,10 +33,16 @@ export default function FeaturedProjects() {
 
       <Projects>
         <ProjectKFC />
+        <Space />
+        <ProjectAdvise />
       </Projects>
     </CustomContainer>
   );
 }
+
+const Space = styled.div`
+  margin-top: 10em;
+`;
 
 const CustomContainer = styled(Container)`
   height: 100%;
