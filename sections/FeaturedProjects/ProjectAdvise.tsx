@@ -91,44 +91,48 @@ const Img = styled(Image)``;
 
 const ImageContainer = styled(motion.div)`
   position: absolute;
-  bottom: -25vw;
-  right: -30vw;
+  bottom: -18vw;
+  right: -35vw;
   width: 50em;
   height: 40em;
 
   img {
-    width: 25em;
+    width: 35em;
   }
 
   @media (max-width: 950px) {
-    right: -50vw;
-    bottom: -28vw;
+    right: -45vw;
 
     img {
-      width: 18em;
+      width: 35em;
     }
   }
 
   @media (max-width: 800px) {
-    right: -60vw;
-    bottom: -40vw;
-
-    img {
-      width: 15em;
-    }
-  }
-
-  @media (max-width: 800px) {
-    right: -60vw;
-    bottom: -45vw;
-  }
-
-  @media (max-width: 550px) {
-    right: -40vw;
-    bottom: -20vw;
+    bottom: -30vw;
+    right: -57.5vw;
 
     img {
       width: 25em;
+    }
+  }
+
+  @media (max-width: 750px) {
+    bottom: -35vw;
+    right: -60vw;
+  }
+
+  @media (max-width: 750px) {
+    bottom: -38vw;
+    right: -65vw;
+  }
+
+  @media (max-width: 550px) {
+    right: -45vw;
+    bottom: -20vw;
+
+    img {
+      width: 40em;
     }
   }
 
@@ -138,11 +142,7 @@ const ImageContainer = styled(motion.div)`
   }
 
   @media (max-width: 350px) {
-    right: -55vw;
+    right: -60vw;
     bottom: -15vw;
-
-    img {
-      width: 30em;
-    }
   }
 `;
