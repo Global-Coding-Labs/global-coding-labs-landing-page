@@ -36,7 +36,7 @@ export default function Home() {
             <Headline3>{"</>"}</Headline3>
           </Logo>
 
-          <Navigation
+          {/* <Navigation
             onMouseOver={() => {
               dispatch({ type: "CHANGE_CURSOR_STATE", payload: "focus" });
             }}
@@ -46,7 +46,7 @@ export default function Home() {
           >
             <div />
             <div />
-          </Navigation>
+          </Navigation> */}
         </Flex>
       </Navbar>
 
