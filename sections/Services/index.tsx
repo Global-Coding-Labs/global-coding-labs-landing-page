@@ -48,7 +48,7 @@ export default function Services() {
                     <Headline1>Our <Emphatize>Services</Emphatize></Headline1>
                 </Heading>
                 <Pills wrap>
-                    {services.map((service: string) => <Pill for={service} />)}
+                    {services.map((service: string) => <Pill key={service} for={service} />)}
                 </Pills>
             </Flex>
         </Container>

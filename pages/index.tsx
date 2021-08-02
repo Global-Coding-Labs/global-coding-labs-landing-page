@@ -4,6 +4,7 @@ import Home from "../sections/Home";
 import About from "../sections/About";
 import FeaturedProjects from "../sections/FeaturedProjects";
 import Services from "../sections/Services";
+import Contact from "../sections/Contact";
 
 export default function Main() {
   return (
@@ -12,6 +13,7 @@ export default function Main() {
       <About />
       <FeaturedProjects />
       <Services />
+      <Contact />
     </Wrapper>
   );
 }
