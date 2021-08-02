@@ -35,7 +35,6 @@ export default function Services() {
         'UI/UX',
         'Mobile development',
         'Business intelligence',
-        'Web development',
         'IT Outsourcing',
         'Animations',
         'Software development'
@@ -47,7 +46,7 @@ export default function Services() {
                 <Heading>
                     <Headline1>Our <Emphatize>Services</Emphatize></Headline1>
                 </Heading>
-                <Pills wrap>
+                <Pills>
                     {services.map((service: string) => <Pill key={service} for={service} />)}
                 </Pills>
             </Flex>
@@ -66,4 +65,5 @@ const Heading = styled.div`
 const Pills = styled(Flex)`
     height: auto;
     align-items: space-between;
+    flex-wrap: wrap;
 `;

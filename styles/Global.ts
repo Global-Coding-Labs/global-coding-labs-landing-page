@@ -14,8 +14,17 @@ export default createGlobalStyle`
     font-size: calc(.4em + 1vw);
   }
 
+  body, input, input::placeholder, textarea {
+    font-family: 'Noto Sans';
+  }
+
+  input:focus, textarea:focus {
+    outline-color: ${props => props.theme.secondary1};
+  }
+
   body {
     font-family: 'Noto Sans', sans-serif;
     background-color: white;
+    color: #263238;
   }
 `;

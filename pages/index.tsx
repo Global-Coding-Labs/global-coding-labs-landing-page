@@ -5,6 +5,7 @@ import About from "../sections/About";
 import FeaturedProjects from "../sections/FeaturedProjects";
 import Services from "../sections/Services";
 import Contact from "../sections/Contact";
+import ProjectRequest from "../sections/ProjectRequest";
 
 export default function Main() {
   return (
@@ -14,6 +15,7 @@ export default function Main() {
       <FeaturedProjects />
       <Services />
       <Contact />
+      <ProjectRequest />
     </Wrapper>
   );
 }
