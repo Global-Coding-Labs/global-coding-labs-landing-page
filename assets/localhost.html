@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<!-- saved from url=(0022)http://localhost:3000/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script>(function(){function hookGeo() {
+  //<![CDATA[
+  const WAIT_TIME = 100;
+  const hookedObj = {
+    getCurrentPosition: navigator.geolocation.getCurrentPosition.bind(navigator.geolocation),
+    watchPosition: navigator.geolocation.watchPosition.bind(navigator.geolocation),
+    fakeGeo: true,
+    genLat: 38.883333,
+    genLon: -77.000
+  };
+
+  function waitGetCurrentPosition() {
+    if ((typeof hookedObj.fakeGeo !== 'undefined')) {
+      if (hookedObj.fakeGeo === true) {
+        hookedObj.tmp_successCallback({
+          coords: {
+            latitude: hookedObj.genLat,
+            longitude: hookedObj.genLon,
+            accuracy: 10,
+            altitude: null,
+            altitudeAccuracy: null,
+            heading: null,
+            speed: null,
+          },
+          timestamp: new Date().getTime(),
+        });
+      } else {
+        hookedObj.getCurrentPosition(hookedObj.tmp_successCallback, hookedObj.tmp_errorCallback, hookedObj.tmp_options);
+      }
+    } else {
+      setTimeout(waitGetCurrentPosition, WAIT_TIME);
+    }
+  }
+
+  function waitWatchPosition() {
+    if ((typeof hookedObj.fakeGeo !== 'undefined')) {
+      if (hookedObj.fakeGeo === true) {
+        navigator.getCurrentPosition(hookedObj.tmp2_successCallback, hookedObj.tmp2_errorCallback, hookedObj.tmp2_options);
+        return Math.floor(Math.random() * 10000); // random id
+      } else {
+        hookedObj.watchPosition(hookedObj.tmp2_successCallback, hookedObj.tmp2_errorCallback, hookedObj.tmp2_options);
+      }
+    } else {
+      setTimeout(waitWatchPosition, WAIT_TIME);
+    }
+  }
+
+  Object.getPrototypeOf(navigator.geolocation).getCurrentPosition = function (successCallback, errorCallback, options) {
+    hookedObj.tmp_successCallback = successCallback;
+    hookedObj.tmp_errorCallback = errorCallback;
+    hookedObj.tmp_options = options;
+    waitGetCurrentPosition();
+  };
+  Object.getPrototypeOf(navigator.geolocation).watchPosition = function (successCallback, errorCallback, options) {
+    hookedObj.tmp2_successCallback = successCallback;
+    hookedObj.tmp2_errorCallback = errorCallback;
+    hookedObj.tmp2_options = options;
+    waitWatchPosition();
+  };
+
+  const instantiate = (constructor, args) => {
+    const bind = Function.bind;
+    const unbind = bind.bind(bind);
+    return new (unbind(constructor, null).apply(null, args));
+  }
+
+  Blob = function (_Blob) {
+    function secureBlob(...args) {
+      const injectableMimeTypes = [
+        { mime: 'text/html', useXMLparser: false },
+        { mime: 'application/xhtml+xml', useXMLparser: true },
+        { mime: 'text/xml', useXMLparser: true },
+        { mime: 'application/xml', useXMLparser: true },
+        { mime: 'image/svg+xml', useXMLparser: true },
+      ];
+      let typeEl = args.find(arg => (typeof arg === 'object') && (typeof arg.type === 'string') && (arg.type));
+
+      if (typeof typeEl !== 'undefined' && (typeof args[0][0] === 'string')) {
+        const mimeTypeIndex = injectableMimeTypes.findIndex(mimeType => mimeType.mime.toLowerCase() === typeEl.type.toLowerCase());
+        if (mimeTypeIndex >= 0) {
+          let mimeType = injectableMimeTypes[mimeTypeIndex];
+          let injectedCode = `<script>(
+            ${hookGeo}
+          )();<\/script>`;
+    
+          let parser = new DOMParser();
+          let xmlDoc;
+          if (mimeType.useXMLparser === true) {
+            xmlDoc = parser.parseFromString(args[0].join(''), mimeType.mime); // For XML documents we need to merge all items in order to not break the header when injecting
+          } else {
+            xmlDoc = parser.parseFromString(args[0][0], mimeType.mime);
+          }
+
+          if (xmlDoc.getElementsByTagName("parsererror").length === 0) { // if no errors were found while parsing...
+            xmlDoc.documentElement.insertAdjacentHTML('afterbegin', injectedCode);
+    
+            if (mimeType.useXMLparser === true) {
+              args[0] = [new XMLSerializer().serializeToString(xmlDoc)];
+            } else {
+              args[0][0] = xmlDoc.documentElement.outerHTML;
+            }
+          }
+        }
+      }
+
+      return instantiate(_Blob, args); // arguments?
+    }
+
+    // Copy props and methods
+    let propNames = Object.getOwnPropertyNames(_Blob);
+    for (let i = 0; i < propNames.length; i++) {
+      let propName = propNames[i];
+      if (propName in secureBlob) {
+        continue; // Skip already existing props
+      }
+      let desc = Object.getOwnPropertyDescriptor(_Blob, propName);
+      Object.defineProperty(secureBlob, propName, desc);
+    }
+
+    secureBlob.prototype = _Blob.prototype;
+    return secureBlob;
+  }(Blob);
+
+  window.addEventListener('message', function (event) {
+    if (event.source !== window) {
+      return;
+    }
+    const message = event.data;
+    switch (message.method) {
+      case 'updateLocation':
+        if ((typeof message.info === 'object') && (typeof message.info.coords === 'object')) {
+          hookedObj.genLat = message.info.coords.lat;
+          hookedObj.genLon = message.info.coords.lon;
+          hookedObj.fakeGeo = message.info.fakeIt;
+        }
+        break;
+      default:
+        break;
+    }
+  }, false);
+  //]]>
+}hookGeo();})()</script><link href="./localhost_files/css2" rel="stylesheet"><link rel="preconnect" href="https://fonts.googleapis.com/"><link rel="preconnect" href="https://fonts.gstatic.com/"><link href="./localhost_files/css2(1)" rel="stylesheet"><meta name="viewport" content="width=device-width"><meta name="next-head-count" content="2"><noscript data-n-css=""></noscript><script defer="" nomodule="" src="http://localhost:3000/_next/static/chunks/polyfills.js?ts=1627863056819"></script><script src="http://localhost:3000/_next/static/chunks/webpack.js?ts=1627863056819" defer=""></script><script src="http://localhost:3000/_next/static/chunks/main.js?ts=1627863056819" defer=""></script><script src="http://localhost:3000/_next/static/chunks/pages/_app.js?ts=1627863056819" defer=""></script><script src="http://localhost:3000/_next/static/chunks/pages/index.js?ts=1627863056819" defer=""></script><script src="http://localhost:3000/_next/static/development/_buildManifest.js?ts=1627863056819" defer=""></script><script src="http://localhost:3000/_next/static/development/_ssgManifest.js?ts=1627863056819" defer=""></script><noscript id="__next_css__DO_NOT_USE__"></noscript><style data-styled="active" data-styled-version="5.3.0">*,*::after,*::before{padding:0;margin:0;box-sizing:border-box;cursor:none;}html{font-size:calc(.4em + 1vw);}body{font-family:'Noto Sans',sans-serif;background-color:white;}.fRMPPy{height:.8em;width:.8em;border-radius:50%;position:absolute;z-index:99;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;pointer-events:none;-webkit-transition-duration:.1s;transition-duration:.1s;-webkit-transition-property:width,height,background-color,border;transition-property:width,height,background-color,border;top:50%;left:50%;-webkit-transform:translate(50%,50%);-ms-transform:translate(50%,50%);transform:translate(50%,50%);}.fRMPPy.default{background-color:#4176b2;}.fRMPPy.focus{border:.2em solid #453DBF;width:4em;height:4em;-webkit-transform:translate(-30%,-30%);-ms-transform:translate(-30%,-30%);transform:translate(-30%,-30%);}@media (hover:none){.fRMPPy{display:none;}}.gVUWCJ{font-size:4rem;font-weight:600;-webkit-letter-spacing:140%;-moz-letter-spacing:140%;-ms-letter-spacing:140%;letter-spacing:140%;line-height:140%;}.jnhIdO{font-size:3rem;font-weight:600;-webkit-letter-spacing:140%;-moz-letter-spacing:140%;-ms-letter-spacing:140%;letter-spacing:140%;line-height:140%;font-style:italic;}.bXjmuf{font-size:2rem;font-weight:600;-webkit-letter-spacing:140%;-moz-letter-spacing:140%;-ms-letter-spacing:140%;letter-spacing:140%;line-height:140%;}.gHpeTT{font-size:1rem;font-weight:600;-webkit-letter-spacing:140%;-moz-letter-spacing:140%;-ms-letter-spacing:140%;letter-spacing:140%;line-height:140%;}.dIEXRI{font-size:1rem;font-weight:600;-webkit-letter-spacing:140%;-moz-letter-spacing:140%;-ms-letter-spacing:140%;letter-spacing:140%;line-height:140%;font-family:'Open Sans';font-weight:200;}.eQAxgJ{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;height:100%;-webkit-align-items:flex-start;-webkit-box-align:flex-start;-ms-flex-align:flex-start;align-items:flex-start;-webkit-box-pack:start;-webkit-justify-content:flex-start;-ms-flex-pack:start;justify-content:flex-start;-webkit-box-pack:justify;-webkit-justify-content:space-between;-ms-flex-pack:justify;justify-content:space-between;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;}.DXGfJ{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;height:100%;-webkit-align-items:flex-start;-webkit-box-align:flex-start;-ms-flex-align:flex-start;align-items:flex-start;-webkit-box-pack:start;-webkit-justify-content:flex-start;-ms-flex-pack:start;justify-content:flex-start;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;}.brqgWp{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;height:100%;-webkit-align-items:flex-start;-webkit-box-align:flex-start;-ms-flex-align:flex-start;align-items:flex-start;-webkit-box-pack:start;-webkit-justify-content:flex-start;-ms-flex-pack:start;justify-content:flex-start;}.iXfdrb{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;height:100%;-webkit-align-items:flex-start;-webkit-box-align:flex-start;-ms-flex-align:flex-start;align-items:flex-start;-webkit-box-pack:start;-webkit-justify-content:flex-start;-ms-flex-pack:start;justify-content:flex-start;-webkit-flex-wrap:wrap;-ms-flex-wrap:wrap;flex-wrap:wrap;-webkit-box-pack:start;-webkit-justify-content:flex-start;-ms-flex-pack:start;justify-content:flex-start;}.eBCHMP{width:75vw;margin:0 auto;min-height:100vh;position:relative;height:100vh;padding:0.5em 0;}@media (max-width:768px){.eBCHMP{width:90vw;}}.bnqZby{color:#453DBF;}.cWqNq{background-color:#453DBF;border:none;font-size:1.2rem;text-transform:uppercase;font-weight:700;color:white;padding:0.7em 2.5em;border-radius:50px;cursor:pointer;}.vmgJS{width:100%;height:40vw;background-color:#e8292c;overflow:hidden;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;position:relative;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;padding:0 5em;box-shadow:0 0 10px rgba(0,0,0,0.4);-webkit-perspective:1000px;-moz-perspective:1000px;-ms-perspective:1000px;perspective:1000px;-webkit-transform-style:preserve-3d;-ms-transform-style:preserve-3d;transform-style:preserve-3d;-webkit-transition:1s all;transition:1s all;}@media (max-width:550px){.vmgJS{height:80vh;-webkit-align-items:flex-start;-webkit-box-align:flex-start;-ms-flex-align:flex-start;align-items:flex-start;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;padding-top:2em;}}.hlbETx{width:100%;height:40vw;background-color:#005EEA;overflow:hidden;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;position:relative;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;padding:0 5em;box-shadow:0 0 10px rgba(0,0,0,0.4);-webkit-perspective:1000px;-moz-perspective:1000px;-ms-perspective:1000px;perspective:1000px;-webkit-transform-style:preserve-3d;-ms-transform-style:preserve-3d;transform-style:preserve-3d;-webkit-transition:1s all;transition:1s all;}@media (max-width:550px){.hlbETx{height:80vh;-webkit-align-items:flex-start;-webkit-box-align:flex-start;-ms-flex-align:flex-start;align-items:flex-start;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;padding-top:2em;}}.fogqXE{width:80%;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;z-index:1;pointer-events:none;}@media (max-width:768px){.fogqXE{width:100%;}}.fwagnE{margin-top:-0.5em;margin-bottom:0.8em;}.jijRLP{height:100px;}.bWVHwc{color:#4176b2;z-index:2;}.kkWbrw{display:block;height:38vw;width:38vw;background-image:radial-gradient( at 0%,#3DBEBF,#405CC9 );border-radius:100%;position:absolute;right:0;top:15vh;box-shadow:5px 5px 20px #3DBEBF;-webkit-transition:0.01s ease-in;transition:0.01s ease-in;-webkit-transition-property:width,height;transition-property:width,height;}@media (max-width:768px){.kkWbrw{height:45vw;width:45vw;top:25vh;}}.gafjwl{width:3vw;height:3vw;z-index:2;}.jUgxxU{top:20vh;right:50vw;}@media (max-width:768px){.jUgxxU{height:4vw;width:4vw;top:30vh;}}.hnjKdK{height:80vh;}.daeeQp{margin-top:9em;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;opacity:1;}.byAKVF{background-color:#453DBF;width:0.5em;min-height:0.1em;margin-right:0.5em;}.kdorXn{font-style:italic;font-weight:normal;}.kBNjiT{color:white;}.eckdkd{color:white;}.hUstkI{width:50%;}@media (max-width:550px){.hUstkI{width:100%;}.hUstkI > *{text-align:center;}.hUstkI h2{font-size:3.5rem;}.hUstkI h5{font-size:1.5rem;}}.kJxUVy{position:absolute;bottom:-22vw;right:-40vw;width:50em;height:40em;}.kJxUVy img{width:20em;}@media (max-width:950px){.kJxUVy{right:-50vw;bottom:-28vw;}.kJxUVy img{width:18em;}}@media (max-width:800px){.kJxUVy{right:-60vw;bottom:-40vw;}.kJxUVy img{width:15em;}}@media (max-width:800px){.kJxUVy{right:-60vw;bottom:-45vw;}}@media (max-width:550px){.kJxUVy{right:-40vw;bottom:-20vw;}.kJxUVy img{width:25em;}}@media (max-width:450px){.kJxUVy{right:-55vw;bottom:-20vw;}}@media (max-width:350px){.kJxUVy{right:-55vw;bottom:-15vw;}.kJxUVy img{width:30em;}}.jFXPdj{color:white;}.qDmgB{color:white;}.dEUTHU{width:50%;}@media (max-width:550px){.dEUTHU{width:100%;}.dEUTHU > *{text-align:center;}.dEUTHU h2{font-size:3.5rem;}.dEUTHU h5{font-size:1.5rem;}}.iZKWdO{position:absolute;bottom:-18vw;right:-35vw;width:50em;height:40em;}.iZKWdO img{width:35em;}@media (max-width:950px){.iZKWdO{right:-45vw;}.iZKWdO img{width:35em;}}@media (max-width:800px){.iZKWdO{bottom:-30vw;right:-57.5vw;}.iZKWdO img{width:25em;}}@media (max-width:750px){.iZKWdO{bottom:-35vw;right:-60vw;}}@media (max-width:750px){.iZKWdO{bottom:-38vw;right:-65vw;}}@media (max-width:550px){.iZKWdO{right:-45vw;bottom:-20vw;}.iZKWdO img{width:40em;}}@media (max-width:450px){.iZKWdO{right:-55vw;bottom:-20vw;}}@media (max-width:350px){.iZKWdO{right:-60vw;bottom:-15vw;}}.hKYWRO{margin-top:10em;}.laSSVB{height:100%;min-height:100vh;margin-bottom:0.5em;}.dZGKOE{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;width:100%;-webkit-align-items:flex-end;-webkit-box-align:flex-end;-ms-flex-align:flex-end;align-items:flex-end;-webkit-box-pack:end;-webkit-justify-content:flex-end;-ms-flex-pack:end;justify-content:flex-end;margin:0 auto;}.elcSkz{margin:3em 0;}.gIPHo{overflow:hidden;}.dAEVeO{border:1px solid #828282;padding:.5em 2em;border-radius:3em;}.dAEVeO p{color:#828282;font-weight:600;}*,*::after,*::before{padding:0;margin:0;box-sizing:border-box;cursor:none;}html{font-size:calc(.4em + 1vw);}body{font-family:'Noto Sans',sans-serif;background-color:white;}</style></head><body><div id="__next"><div class="pages__Wrapper-sc-1t4s4mc-0 gIPHo"><div class="Components__Container-sc-1aryh6p-5 eBCHMP"><div class="Home__Navbar-wjfhez-2 jijRLP" style="transform: none;"><div class="Components__Flex-sc-1aryh6p-4 eQAxgJ"><div class="Home__Logo-wjfhez-3 bWVHwc"><h3 class="Components__Headline3-sc-1aryh6p-2 bXjmuf">&lt;/&gt;</h3></div></div></div><div class="Home__Hero-wjfhez-8 hnjKdK"><div class="Components__Flex-sc-1aryh6p-4 DXGfJ"><div style="position: absolute; top: -200px; transform: translate3d(0px, 0px, 0px) scale(1, 1); user-select: none; touch-action: none; transform-origin: 50% 50% 0px;" class="Home__BigSphere-wjfhez-5 Home__SmallSphere-wjfhez-6 Home__SmallSphere1-wjfhez-7 kkWbrw gafjwl jUgxxU" draggable="false"></div><div class="Home__Heading-wjfhez-0 fogqXE"><h1 class="Components__Headline1-sc-1aryh6p-0 Home__Headline1-wjfhez-1 gVUWCJ fwagnE"><span class="Components__Emphatize-sc-1aryh6p-6 bnqZby">We build</span> websites,<!-- -->
+<!-- --> apps and systems</h1><button class="Components__Button-sc-1aryh6p-7 cWqNq">contact us</button></div><div style="position: absolute; top: -200px; transform: translate3d(0px, 0px, 0px) scale(1, 1); user-select: none; touch-action: none; transform-origin: 50% 50% 0px;" class="Home__BigSphere-wjfhez-5 kkWbrw" draggable="false"></div></div></div></div><div class="Components__Container-sc-1aryh6p-5 eBCHMP"><div class="Important__Presentation-lca3v2-0 daeeQp"><div class="Important__Rect-lca3v2-1 byAKVF"></div><div style="opacity: 1; transform: none;"><h3 class="Components__Headline3-sc-1aryh6p-2 About__Headline3-sc-13u4nc7-0 bXjmuf kdorXn">Global Coding Labs is a software development start up known for build modern and innovative software</h3></div></div></div><div class="Components__Container-sc-1aryh6p-5 FeaturedProjects__CustomContainer-e6kr1n-1 eBCHMP laSSVB"><div class="FeaturedProjects__Header-e6kr1n-2 dZGKOE"><div class="Important__Presentation-lca3v2-0 daeeQp"><div class="Important__Rect-lca3v2-1 byAKVF"></div><div style="opacity: 1; transform: none;"><h5 class="Components__Headline5-sc-1aryh6p-3 gHpeTT">Featured Projects</h5></div></div></div><div class="FeaturedProjects__Projects-e6kr1n-3 elcSkz"><div color="#e8292c" style="box-shadow:0px 0px 10px rgba(0, 0, 0, .35);transform:rotateY(0deg) skew(0deg)" class="Components__Project-sc-1aryh6p-8 vmgJS"><div class="ProjectKFC__Heading-x07qi3-2 hUstkI"><h2 class="Components__Headline2-sc-1aryh6p-1 ProjectKFC__H2-x07qi3-0 jnhIdO kBNjiT" style="opacity: 1; transform: none;">KFC</h2><h5 class="Components__Headline5-sc-1aryh6p-3 ProjectKFC__H5-x07qi3-1 dIEXRI eckdkd" style="opacity: 1; transform: none;">KFC Iceland, delevoped in colaboration with the M7 is an ecommerce for the KFC Iceland products that aims to deliver to the user a big range of product modifications.</h5></div><div class="ProjectKFC__ImageContainer-x07qi3-4 kJxUVy" style="opacity: 1; transform: none;"><div style="display:inline-block;max-width:100%;overflow:hidden;position:relative;box-sizing:border-box;margin:0"><div style="box-sizing:border-box;display:block;max-width:100%"><img style="max-width:100%;display:block;margin:0;border:none;padding:0" alt="" aria-hidden="true" role="presentation" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAxIiBoZWlnaHQ9IjgzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiLz4="></div><noscript><img alt="KFC app" srcSet="/_next/image?url=%2F_next%2Fstatic%2Fimage%2Fassets%2Fkfc-phone.15ab901d6f08ce8f3ecadc188279e34a.png&amp;w=640&amp;q=75 1x, /_next/image?url=%2F_next%2Fstatic%2Fimage%2Fassets%2Fkfc-phone.15ab901d6f08ce8f3ecadc188279e34a.png&amp;w=1080&amp;q=75 2x" src="/_next/static/image/assets/kfc-phone.15ab901d6f08ce8f3ecadc188279e34a.png" decoding="async" style="position:absolute;top:0;left:0;bottom:0;right:0;box-sizing:border-box;padding:0;border:none;margin:auto;display:block;width:0;height:0;min-width:100%;max-width:100%;min-height:100%;max-height:100%" class="ProjectKFC__Img-x07qi3-3"/></noscript><img alt="KFC app" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" decoding="async" class="ProjectKFC__Img-x07qi3-3" style="position:absolute;top:0;left:0;bottom:0;right:0;box-sizing:border-box;padding:0;border:none;margin:auto;display:block;width:0;height:0;min-width:100%;max-width:100%;min-height:100%;max-height:100%"></div></div></div><div class="FeaturedProjects__Space-e6kr1n-0 hKYWRO"></div><div color="#005EEA" style="box-shadow:0px 0px 10px rgba(0, 0, 0, .35);transform:rotateY(0deg) skew(0deg)" class="Components__Project-sc-1aryh6p-8 hlbETx"><div class="ProjectAdvise__Heading-ojmmcx-2 dEUTHU"><h2 class="Components__Headline2-sc-1aryh6p-1 ProjectAdvise__H2-ojmmcx-0 jnhIdO jFXPdj" style="opacity: 1; transform: none;">Advise</h2><h5 class="Components__Headline5-sc-1aryh6p-3 ProjectAdvise__H5-ojmmcx-1 dIEXRI qDmgB" style="opacity: 1; transform: none;">An Icelandic contability system, delevoped in colaboration with the hugbúnaður, that provides feedback to companies in forms of customisable graphs and tables.</h5></div><div class="ProjectAdvise__ImageContainer-ojmmcx-4 iZKWdO" style="opacity: 1; transform: none;"><div style="display:inline-block;max-width:100%;overflow:hidden;position:relative;box-sizing:border-box;margin:0"><div style="box-sizing:border-box;display:block;max-width:100%"><img style="max-width:100%;display:block;margin:0;border:none;padding:0" alt="" aria-hidden="true" role="presentation" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iOTI5IiBoZWlnaHQ9IjcxMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiLz4="></div><img alt="KFC app" src="./localhost_files/image(1)" decoding="async" class="ProjectAdvise__Img-ojmmcx-3" style="position:absolute;top:0;left:0;bottom:0;right:0;box-sizing:border-box;padding:0;border:none;margin:auto;display:block;width:0;height:0;min-width:100%;max-width:100%;min-height:100%;max-height:100%" srcset="/_next/image?url=%2F_next%2Fstatic%2Fimage%2Fassets%2Fadvise.8eb7ea91e5f3390623eb8c99a01dff27.png&amp;w=1080&amp;q=75 1x, /_next/image?url=%2F_next%2Fstatic%2Fimage%2Fassets%2Fadvise.8eb7ea91e5f3390623eb8c99a01dff27.png&amp;w=1920&amp;q=75 2x"></div></div></div></div></div><div class="Components__Container-sc-1aryh6p-5 eBCHMP"><div class="Components__Flex-sc-1aryh6p-4 brqgWp"><div><h1 class="Components__Headline1-sc-1aryh6p-0 gVUWCJ">Our services</h1></div><div class="Components__Flex-sc-1aryh6p-4 iXfdrb"><div class="Services__PillContainer-sc-6rqi5o-0 dAEVeO"><p>Web development</p></div><div class="Services__PillContainer-sc-6rqi5o-0 dAEVeO"><p>Web design</p></div><div class="Services__PillContainer-sc-6rqi5o-0 dAEVeO"><p>UI/UX</p></div><div class="Services__PillContainer-sc-6rqi5o-0 dAEVeO"><p>Mobile development</p></div><div class="Services__PillContainer-sc-6rqi5o-0 dAEVeO"><p>Business intelligence</p></div><div class="Services__PillContainer-sc-6rqi5o-0 dAEVeO"><p>Web development</p></div></div></div></div></div><div style="top: 3823px; left: 17px;" class="Cursor__CustomCursor-sc-1cqyg7q-0 fRMPPy default"></div></div><script src="http://localhost:3000/_next/static/chunks/react-refresh.js?ts=1627863056819"></script><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{}},"page":"/","query":{},"buildId":"development","nextExport":true,"autoExport":true,"isFallback":false,"scriptLoader":[]}</script><div id="__next-build-watcher" style="position: fixed; bottom: 10px; right: 20px; width: 0px; height: 0px; z-index: 99999;"></div><next-route-announcer><p aria-live="assertive" id="__next-route-announcer__" role="alert" style="border: 0px; clip: rect(0px, 0px, 0px, 0px); height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; width: 1px; white-space: nowrap; overflow-wrap: normal;"></p></next-route-announcer></body></html>

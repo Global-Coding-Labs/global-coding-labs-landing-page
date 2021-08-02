@@ -18,7 +18,7 @@ export const Headline1 = styled.h1<{ italic?: boolean; light?: boolean; }>`
   `}
 `;
 
-export const Headline2 = styled(motion.h2)<{ italic?: boolean; light?: boolean; }>`
+export const Headline2 = styled(motion.h2) <{ italic?: boolean; light?: boolean; }>`
   font-size: 3rem;
   font-weight: 600;
   letter-spacing: 140%;
@@ -48,7 +48,7 @@ export const Headline3 = styled.h3<{ italic?: boolean; light?: boolean; }>`
   `}
 `;
 
-export const Headline5 = styled(motion.h5)<{ italic?: boolean; light?: boolean; }>`
+export const Headline5 = styled(motion.h5) <{ italic?: boolean; light?: boolean; }>`
   font-size: 1rem;
   font-weight: 600;
   letter-spacing: 140%;
@@ -69,6 +69,9 @@ export const Flex = styled.div<{
   justifyCenter?: boolean;
   alignCenter?: boolean;
   column?: boolean;
+  wrap?: boolean;
+  row?: boolean;
+  justifyStart?: boolean;
 }>`
   display: flex;
   height: 100%;
@@ -95,6 +98,26 @@ export const Flex = styled.div<{
     css`
       justify-content: center;
     `}
+    ${(props) =>
+    props.wrap &&
+    css`
+      flex-wrap: wrap;
+    `}
+
+    ${(props) =>
+    props.row &&
+    css`
+      flex-direction: row;
+    `}
+
+
+    ${(props) =>
+    props.justifyStart &&
+    css`
+      justify-content: flex-start;
+    `}
+
+
 `;
 
 export const Container = styled.div`
