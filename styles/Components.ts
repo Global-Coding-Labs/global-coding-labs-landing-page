@@ -79,7 +79,7 @@ export const Body = styled.h3<{ italic?: boolean; light?: boolean; }>`
   `}
 `;
 
-export const Flex = styled.div<{
+export const Flex = styled(motion.div)<{
   justifySpaceBetween?: boolean;
   justifyCenter?: boolean;
   alignCenter?: boolean;

@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useAnimation } from "framer-motion";
+import { handleScrollTo } from "../utils";
 
 export function useGetDistanceToTheTop(domElement: any) {
   const [distance, setDistance] = useState({
@@ -42,6 +44,22 @@ export function useHandleScroll(handler: () => void) {
   useEffect(() => {
     window.addEventListener("scroll", handler);
   }, []);
+}
+
+export function FadeIn(section: number) {
+  const controls = useAnimation();
+
+  useHandleScroll(handleScrollTo(section, () => {
+    controls.start(
+      {
+        y: 0,
+        opacity: 1,
+      },
+      { delay: 0.5, duration: 0.5, ease: "easeOut" }
+    );
+  }));
+
+  return controls;
 }
 
 export function useProjectCardAnimation(ref: any) {

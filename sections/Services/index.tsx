@@ -1,6 +1,8 @@
 import React, { CSSProperties } from "react";
 import styled from "styled-components";
 import { Container, Flex, Headline1, Emphatize } from "../../styles/Components";
+import { FadeIn } from '../../hooks';
+import { motion } from 'framer-motion';
 
 interface PillProps {
     for: string; 
@@ -40,13 +42,15 @@ export default function Services() {
         'Software development'
     ];
 
+    const controls = FadeIn(9);
+
     return (
         <CustomContainer>
             <Flex justifySpaceBetween alignCenter>
-                <Heading>
+                <Heading animate={controls} initial={{ y: 20, opacity: 0 }}>
                     <Headline1>Our <Emphatize>Services</Emphatize></Headline1>
                 </Heading>
-                <Pills>
+                <Pills animate={controls} initial={{ y: 20, opacity: 0 }}>
                     {services.map((service: string) => <Pill key={service} for={service} />)}
                 </Pills>
             </Flex>
@@ -58,7 +62,7 @@ const CustomContainer = styled(Container)`
     padding: 9em 0;
 `;
 
-const Heading = styled.div`
+const Heading = styled(motion.div)`
     padding: 0 4em 0 0;
 
     h1 {
