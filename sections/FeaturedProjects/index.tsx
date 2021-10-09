@@ -45,8 +45,6 @@ const Space = styled.div`
 `;
 
 const CustomContainer = styled(Container)`
-  height: 100%;
-  min-height: 100vh;
   margin-bottom: 0.5em;
 `;
 

@@ -41,7 +41,7 @@ export default function Services() {
     ];
 
     return (
-        <Container>
+        <CustomContainer>
             <Flex justifySpaceBetween alignCenter>
                 <Heading>
                     <Headline1>Our <Emphatize>Services</Emphatize></Headline1>
@@ -50,9 +50,13 @@ export default function Services() {
                     {services.map((service: string) => <Pill key={service} for={service} />)}
                 </Pills>
             </Flex>
-        </Container>
+        </CustomContainer>
     );
 }
+
+const CustomContainer = styled(Container)`
+    padding: 9em 0;
+`;
 
 const Heading = styled.div`
     padding: 0 4em 0 0;

@@ -64,6 +64,21 @@ export const Headline5 = styled(motion.h5) <{ italic?: boolean; light?: boolean;
   `}
 `;
 
+export const Body = styled.h3<{ italic?: boolean; light?: boolean; }>`
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 140%;
+  line-height: 140%;
+
+  ${props => props.italic && css`
+    font-style: italic;
+  `}
+
+  ${props => props.light && css`
+    font-weight: 300;
+  `}
+`;
+
 export const Flex = styled.div<{
   justifySpaceBetween?: boolean;
   justifyCenter?: boolean;
@@ -123,9 +138,7 @@ export const Flex = styled.div<{
 export const Container = styled.div`
   width: 75vw;
   margin: 0 auto;
-  min-height: 100vh;
   position: relative;
-  height: 100vh;
   padding: 0.5em 0;
 
   @media (max-width: 768px) {

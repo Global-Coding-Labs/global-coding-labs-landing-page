@@ -19,7 +19,7 @@ export default function ProjectRequest() {
     function submitIdea(data: { name: string, email: string, projectIdea: string }) {
         console.log(data);
     }
-    console.log(errors)
+
     return (
         <Container>
             <Form onSubmit={handleSubmit(submitIdea)}>

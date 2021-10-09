@@ -6,6 +6,7 @@ import FeaturedProjects from "../sections/FeaturedProjects";
 import Services from "../sections/Services";
 import Contact from "../sections/Contact";
 import ProjectRequest from "../sections/ProjectRequest";
+import Footer from "../sections/Footer";
 
 export default function Main() {
   return (
@@ -16,10 +17,12 @@ export default function Main() {
       <Services />
       <Contact />
       <ProjectRequest />
+      <Footer />
     </Wrapper>
   );
 }
 
 const Wrapper = styled.div`
   overflow: hidden;
+  height: 100%;
 `;
