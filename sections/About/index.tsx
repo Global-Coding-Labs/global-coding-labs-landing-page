@@ -20,21 +20,25 @@ export default function About() {
     );
   }
 
-  useHandleScroll(handleScrollTo(2, fadeout));
+  useHandleScroll(handleScrollTo(2.5, fadeout));
 
   return (
-    <Container>
+    <CustomContainer>
       <Important {...{ initial: { y: -50 }, animate: controls }}>
         <Headline3>
           Global Coding Labs is a software development start up known for build
           modern and innovative software
         </Headline3>
       </Important>
-    </Container>
+    </CustomContainer>
   );
 }
 
 const Headline3 = styled(H3)`
   font-style: italic;
   font-weight: normal;
+`;
+
+const CustomContainer = styled(Container)`
+  padding: 5em 0;
 `;

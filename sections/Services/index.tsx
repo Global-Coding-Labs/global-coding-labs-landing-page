@@ -42,7 +42,7 @@ export default function Services() {
         'Software development'
     ];
 
-    const controls = FadeIn(9);
+    const controls = FadeIn(8.5);
 
     return (
         <CustomContainer>
