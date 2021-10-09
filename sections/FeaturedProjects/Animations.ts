@@ -4,7 +4,7 @@ import { useAnimation, AnimationControls } from "framer-motion";
 import { useHandleScroll } from "../../hooks";
 import { handleScrollTo } from "../../utils";
 
-export function useProjectControlledAnimations() {
+export function useProjectControlledAnimations(section: number) {
   const projectControls = useAnimation();
   const titleControls = useAnimation();
   const descriptionControls = useAnimation();
@@ -23,7 +23,7 @@ export function useProjectControlledAnimations() {
   }
 
   useHandleScroll(
-    handleScrollTo(4, () => {
+    handleScrollTo(section, () => {
       startControlledAnimation(projectControls, 0.3);
       startControlledAnimation(titleControls, 0.8);
       startControlledAnimation(descriptionControls, 1.3);

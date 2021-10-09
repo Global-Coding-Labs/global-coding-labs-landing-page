@@ -12,7 +12,7 @@ import { useProjectCardAnimation } from '../../hooks'
 export default function ProjectAdvise() {
   const projectRef = useRef<HTMLDivElement | null>(null);
   const [projectControls, titleControls, descriptionControls] =
-    useProjectControlledAnimations();
+    useProjectControlledAnimations(5);
 
   const [mousePosition, setMousePosition] = useProjectCardAnimation(projectRef);
 
